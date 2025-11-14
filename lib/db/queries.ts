@@ -22,6 +22,12 @@ import { BlockKind } from '@/components/block';
 // use the Drizzle adapter for Auth.js / NextAuth
 // https://authjs.dev/reference/adapter/drizzle
 
+if (!process.env.POSTGRES_URL || process.env.POSTGRES_URL === '****') {
+  throw new Error(
+    'POSTGRES_URL is not set. Please create a Postgres database on Vercel and add the connection string to your .env file. See https://vercel.com/docs/storage/vercel-postgres/quickstart',
+  );
+}
+
 // biome-ignore lint: Forbidden non-null assertion.
 const client = postgres(process.env.POSTGRES_URL!);
 const db = drizzle(client);
